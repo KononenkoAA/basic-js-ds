@@ -123,17 +123,17 @@ class BinarySearchTree {
   }
 
   find(data) {
-    this.newRoot = findNode(this.newRoot, data);
+    return findNode(this.newRoot, data);
 
     function findNode(node, data) {
       if (node === null) {
         return null;
       } else if (data < node.data) {
-        return this.findNode(node.left, data);
+        return findNode(node.left, data);
       } else if (data > node.data) {
-        return this.findNode(node.right, data);
+        return findNode(node.right, data);
       } else {
-        return data;
+        return node;
       }
     }
   }
