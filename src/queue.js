@@ -14,69 +14,29 @@ const { ListNode } = require("../extensions/list-node.js");
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
-  constructor() {
-    this.head = null;
-    this.tail = null;
-  }
+  queue = null;
 
   getUnderlyingList() {
-    const nodes = [];
-
-    let currentNode = this.head;
-
-    while (currentNode) {
-      nodes.push(currentNode);
-      currentNode = currentNode.next;
-    }
-
-    return nodes;
+    return this.queue;
   }
 
   enqueue(value) {
-    const newNode = new QueueNode(value);
-
-    if (!this.head || !this.tail) {
-      this.head = newNode;
-      this.tail = newNode;
-
-      return this;
+    let el = new ListNode(value);
+    if (!this.queue) {
+      this.queue = el;
+      return;
     }
-    this.tail.next = newNode;
-
-    return this;
+    let last = this.queue;
+    while (last.next) {
+      last = last.next;
+    }
+    last.next = el;
   }
 
-  dequeue(value) {
-    if(!this.head){
-      return null;
-    }
-
-    let deletedNode = null;
-
-    while(this.head && this.value === value){
-      deletedNode = this.head;
-
-      this.head = this.head.next;
-    }
-
-    let currentNode = this.head;
-
-    if(currentNode !== null){
-      while(currentNode.next){
-        if(currentNode.next.value === value){
-          deletedNode = currentNode.next;
-          currentNode.next = currentNode.next.next;
-        }else{
-          currentNode = currentNode.next
-        }
-      }
-    }
-
-    if(this.tail?.value === value){
-      this.tail = currentNode;
-    }
-
-    return deletedNode;
+  dequeue() {
+    let val = this.queue.value;
+    this.queue = this.queue.next;
+    return val;
   }
 }
 
